@@ -89,11 +89,7 @@ export const NavBar = () => {
               Home
             </Link>
           </li>
-          <li className={liClass}>
-            <Link to="/new-project" className={getLinkClass("/new-project")}>
-              New Project
-            </Link>
-          </li>
+
           <li className={liClass}>
             {user ? (
               <>

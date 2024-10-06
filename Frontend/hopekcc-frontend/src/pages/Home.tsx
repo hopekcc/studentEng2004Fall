@@ -2,10 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "react-query";
-import { Clock, Calendar } from "lucide-react";
 import { Project } from "../utils/types.ts";
 import { DeleteButton } from "../components/projectComponents/Buttons.tsx";
-import SearchBar from "../components/SearchBar.tsx";
 import { jwtDecode } from 'jwt-decode';
 
 interface ProjectListProps {
@@ -110,7 +108,6 @@ const ProjectList = ({ projects, isLoading }: ProjectListProps) => {
 
 const Home = () => {
   const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
-  const [searchQuery, setSearchQuery] = useState<string>("");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [authLoading, setAuthLoading] = useState<boolean>(true);
   const [userDirectory, setUserDirectory] = useState<string>("");
@@ -120,7 +117,7 @@ const Home = () => {
     return Array.isArray(response.data) ? response.data : [];
   };
 
-  const { data = [], isLoading, isError, error } = useQuery<Project[]>(
+  const { isLoading, isError, error } = useQuery<Project[]>(
     "projects",
     fetchProjects,
     {
@@ -151,25 +148,7 @@ const Home = () => {
     setAuthLoading(false);
   }, []);
 
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-    if (query.trim() === "") {
-      setFilteredProjects(data || []);
-    }
-  };
 
-  const handleSearchSubmit = () => {
-    if (searchQuery.trim() === "") {
-      setFilteredProjects(data || []);
-    } else {
-      const filtered = (data || []).filter(
-        (project) =>
-          project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          project.description.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      setFilteredProjects(filtered);
-    }
-  };
 
   if (authLoading) {
     return (
@@ -196,6 +175,11 @@ const Home = () => {
       <div>
         Error loading projects:{" "}
         {error instanceof Error ? error.message : "Unknown error"}
+        <br />
+        <br />
+        <br />
+        Contact info@hopekcc.org or your teacher to create your folder.
+
       </div>
     );
   }

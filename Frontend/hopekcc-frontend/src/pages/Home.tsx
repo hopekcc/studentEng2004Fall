@@ -28,13 +28,7 @@ const ProjectList = ({ projects, isLoading }: ProjectListProps) => {
     return (
       <div className="grid grid-cols-12 gap-4 items-center py-3 rounded-md transition-colors duration-150">
         <div className="col-span-3 text-left">Name</div>
-        <div className="col-span-4 text-left">Description</div>
-        <div className="col-span-2 text-left flex">
-          Last Updated <Clock size={14} className="m-1" />
-        </div>
-        <div className="col-span-2 text-left flex ">
-          Created <Calendar size={14} className="m-1 " />{" "}
-        </div>
+
         <div className="col-span-1 text-left flex "> </div>
       </div>
     );
@@ -87,20 +81,12 @@ const ProjectList = ({ projects, isLoading }: ProjectListProps) => {
 
     return (
       <div className="grid grid-cols-12 gap-4 items-center py-3 hover:bg-gray-50 rounded-md transition-colors duration-150">
-        <div className="col-span-3">
+        <div className="col-span-11">
           <h3 className="text-left font-medium text-blue-800 hover:underline truncate">
             <Link to={`/projects/${project.name}`}>{project.name}</Link>
           </h3>
         </div>
-        <div className="col-span-4 text-sm text-left text-gray-500 truncate">
-          {project.description}
-        </div>
-        <div className="col-span-2 flex items-center text-xs text-gray-400">
-          <span className="truncate">{new Date(project.updated_at).toLocaleDateString()}</span>
-        </div>
-        <div className="col-span-2 flex items-center text-xs text-gray-400">
-          <span className="truncate">{new Date(project.created_at).toLocaleDateString()}</span>
-        </div>
+
         <DeleteButton onClick={() => handleProjectDelete(project.name)} className="mx-2" />
       </div>
     );
@@ -216,16 +202,10 @@ const Home = () => {
 
   return (
     <div>
-      {/* Search bar Section */}
-      <section className="mx-auto px-4 py-4">
-        <SearchBar
-          onSearch={handleSearch}
-          onSubmit={handleSearchSubmit}
-        />
-      </section>
+
 
       {/* Create Project Section */}
-      <section className="bg-gray-100 mx-auto px-4 py-8">
+      <section className="bg-gray-100 mx-auto px-4 py-8 my-8" >
         <div className="mb-6">
           <h2 className="text-2xl text-left font-semibold mb-2 text-gray-800">
             Create Project

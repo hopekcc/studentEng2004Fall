@@ -132,14 +132,6 @@ const ProjectFilesPage = () => {
 
 
 
-
-
-
-
-
-
-      console.log("Deployment Output:", deployResponse.data);
-      alert("Deployment output: " + deployResponse.data.output);
     } catch (error) {
       console.error("Error deploying project:", error);
       alert("Deployment failed.");

@@ -448,9 +448,30 @@ def run_bash_script(request):
 
 
 
+def get_user_port(request):
+    if request.method == "POST":
+        try:
+            # Load request body
+            data = json.loads(request.body)
+            email = data.get('email')
 
+            # Check if email is provided
+            if not email:
+                return JsonResponse({'error': 'Email is required'}, status=400)
 
+            # Retrieve the corresponding port from environment variables
+            env_port_key = f"EMAIL_PORT_{email}"
+            port = os.getenv(env_port_key)
 
+            if port:
+                return JsonResponse({'port': port}, status=200)
+            else:
+                return JsonResponse({'error': 'Port not found for the given email'}, status=404)
+        
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 
 # Auth0 implementation in everything

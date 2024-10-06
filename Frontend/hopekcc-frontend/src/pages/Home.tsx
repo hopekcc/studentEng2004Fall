@@ -112,6 +112,32 @@ const Home = () => {
   const [authLoading, setAuthLoading] = useState<boolean>(true);
   const [userDirectory, setUserDirectory] = useState<string>("");
 
+  const [userPort, setUserPort] = useState<string | null>(null);
+
+  // Fetch the user port from the backend
+  useEffect(() => {
+    const fetchUserPort = async () => {
+      const token = localStorage.getItem("google_token");
+      if (token) {
+        try {
+          const decodedToken = jwtDecode<DecodedToken>(token);
+          const email = decodedToken.email;
+
+          // Fetch the port from the backend using the user's email
+          const response = await axios.post(`https://class4.hopekcc.org/api/projects/get-user-port`, {
+            email: email,
+          });
+          
+          setUserPort(response.data.port);
+        } catch (error) {
+          console.error("Error fetching user port:", error);
+        }
+      }
+    };
+
+    fetchUserPort();
+  }, []);
+
   const fetchProjects = async (): Promise<Project[]> => {
     const response = await axios.get(`https://class4.hopekcc.org/api/projects/list_dynamic/?directory=${userDirectory}`);
     return Array.isArray(response.data) ? response.data : [];
@@ -210,6 +236,18 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {userPort && (
+        <section className="mx-auto px-4 py-4">
+          <a
+            href={`class4.hopekcc.org:${userPort}`}
+            className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-500"
+          >
+            Visit Your Dashboard
+          </a>
+        </section>
+      )}
+
 
       {/* Projects Section */}
       <section className="mx-auto px-4 py-8">

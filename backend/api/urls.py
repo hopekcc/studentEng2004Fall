@@ -30,4 +30,8 @@ urlpatterns = [
     path('projects/delete_folder/', delete_folder, name='project-delete-folder'),
     path('projects/delete/', delete_project, name='project-delete-project'),
     path('projects/deploy/', run_bash_script, name='project-deploy-project'),    
+    path('projects/get-user-port/', get_user_port, name='get_user_port'),
+
+
+
 ]
